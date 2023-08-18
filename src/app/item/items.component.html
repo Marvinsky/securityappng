@@ -1,4 +1,8 @@
-<ActionBar title="My App"> </ActionBar>
+<ActionBar title="My App">
+  <ActionItem ios.position="right" (tap)="(logout)">
+    <Button *ngIf="authService.isAuthenticated" text="logout"></Button>
+  </ActionItem>
+</ActionBar>
 
 <GridLayout>
   <ListView [items]="items">

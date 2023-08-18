@@ -10,6 +10,8 @@ import { ItemDetailComponent } from "./item/item-detail.component";
 import { NativeScriptFormsModule } from "@nativescript/angular";
 import { NativeScriptHttpClientModule } from "@nativescript/angular";
 
+import { AuthService } from "./auth/auth.service";
+
 @NgModule({
   bootstrap: [AppComponent],
   imports: [
@@ -24,7 +26,7 @@ import { NativeScriptHttpClientModule } from "@nativescript/angular";
     ItemDetailComponent,
     AuthComponent,
   ],
-  providers: [],
+  providers: [AuthService],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class AppModule {}
