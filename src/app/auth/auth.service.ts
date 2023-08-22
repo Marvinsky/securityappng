@@ -3,15 +3,13 @@ import { AuthUser } from "../shared/models/user.model";
 import { Observable, of } from "rxjs";
 
 import * as appSettingsModule from "@nativescript/core/application-settings";
+import { HttpClient } from "@angular/common/http";
+import { Config } from "~/config";
 
 const AUTHENTICATED_KEY = "AUTHENTICATED_KEY";
 
 @Injectable()
 export class AuthService {
-  private users: AuthUser[] = [
-    { email: "marvin.abisrror@gmail.com", password: "123456" },
-  ];
-
   public get isAuthenticated(): boolean {
     return appSettingsModule.getBoolean(AUTHENTICATED_KEY);
   }
@@ -20,23 +18,18 @@ export class AuthService {
     appSettingsModule.setBoolean(AUTHENTICATED_KEY, value);
   }
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   public login(user: AuthUser): Observable<any> {
-    const foundUser = this.users.find(
-      (u) => u.email === user.email && u.password === user.password
-    );
-
-    if (foundUser) {
-      this.isAuthenticated = true;
-      return of(foundUser);
-    }
-
-    return of(null);
+    return this.http.post(`${Config.apiUrl}/login`, {
+      ...user,
+    });
   }
 
   public signUp(user: AuthUser): Observable<any> {
-    return of(null);
+    return this.http.post(`${Config.apiUrl}/register`, {
+      ...user,
+    });
   }
 
   public logout(): Observable<any> {
