@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { AuthUser } from "../shared/models/user.model";
 import { Observable, of } from "rxjs";
+import { tap } from "rxjs/operators";
 
 import * as appSettingsModule from "@nativescript/core/application-settings";
 import { HttpClient } from "@angular/common/http";
@@ -21,9 +22,15 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   public login(user: AuthUser): Observable<any> {
-    return this.http.post(`${Config.apiUrl}/login`, {
-      ...user,
-    });
+    return this.http
+      .post(`${Config.apiUrl}/login`, {
+        ...user,
+      })
+      .pipe(
+        tap((result) => {
+          console.log("token received: ", result.access_token);
+        })
+      );
   }
 
   public signUp(user: AuthUser): Observable<any> {
