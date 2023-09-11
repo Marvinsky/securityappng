@@ -1,3 +1,3 @@
 export class Config {
-  static apiUrl = "http://localhost:8084/api";
+  static apiUrl = "https://192.168.86.243:8443/api";
 }

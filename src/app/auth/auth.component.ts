@@ -20,6 +20,7 @@ export class AuthComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("ngOnInit calling...");
     if (this.authService.isAuthenticated) {
       this.router.navigate(["/items"]);
     }
@@ -38,14 +39,11 @@ export class AuthComponent implements OnInit {
   }
 
   private login() {
-    this.authService.login(this.user).subscribe(
-      (res) => {
-        this.router.navigate(["/items"]);
-      },
-      (error) => {
-        alert("Sorry, we could not log you in.");
-      }
-    );
+    console.log("CALLING LOGIN");
+    this.authService.login(this.user).then((result) => {
+      console.log("result: ", result);
+      this.router.navigate(["/items"]);
+    });
   }
 
   private signUp() {
